@@ -1,0 +1,147 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "seatsurfing.fullname" . }}
+  labels:
+    {{- include "seatsurfing.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "seatsurfing.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "seatsurfing.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "seatsurfing.serviceAccountName" . }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.seatsurfing.jwt.certManager.enabled }}
+      initContainers:
+        - name: {{ .Chart.Name }}-openssl
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: alpine/openssl
+          image: "{{ .Values.images.openssl.repository }}/{{ .Values.images.openssl.name }}:{{ .Values.images.openssl.tag }}"
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          command: ["/bin/sh", "-c"]
+          args:
+            - openssl rsa -in /run/jwt-private-key/tls.key -pubout -out /run/jwt-public-key/tls.key
+          volumeMounts:
+            - mountPath: "/run/jwt-private-key/"
+              name: jwt-private-key
+              readOnly: true
+            - mountPath: "/run/jwt-public-key/"
+              name: jwt-public-key
+              readOnly: false
+        {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}-backend
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: "{{ .Values.images.repository }}/{{ .Values.images.name }}:{{ .Values.images.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.images.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.containerPort }}
+              protocol: TCP
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if or .Values.seatsurfing.jwt.certManager.enabled (gt (len .Values.volumeMounts) 0) }}
+          volumeMounts:
+          {{- end }}
+            {{- if .Values.seatsurfing.jwt.certManager.enabled }}
+            - mountPath: "/run/jwt-private-key/"
+              name: jwt-private-key
+              readOnly: true
+            - mountPath: "/run/jwt-public-key/"
+              name: jwt-public-key
+              readOnly: false
+            {{- end }}
+            {{- with .Values.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "seatsurfing.fullname" . }}
+          env:
+            {{- if .Values.seatsurfing.postgresql.connectionString.existingSecret }}
+            - name: POSTGRES_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.seatsurfing.postgresql.connectionString.secretName }}
+                  key: {{ .Values.seatsurfing.postgresql.connectionString.secretKey }}
+            {{- else }}
+            {{- with .Values.seatsurfing.postgresql }}
+            - name: POSTGRES_URL
+              value: "postgres://{{ .username }}:$(POSTGRES_PASS)@{{ .hostname }}/{{ .database }}"
+            {{- end }}
+            {{- end }}
+            {{- if .Values.seatsurfing.postgresql.password.existingSecret }}
+            - name: POSTGRES_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.seatsurfing.postgresql.password.secretName }}
+                  key: {{ .Values.seatsurfing.postgresql.password.secretKey }}
+            {{- end }}
+            {{- if .Values.seatsurfing.cryptKey.existingSecret }}
+            - name: CRYPT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.seatsurfing.cryptKey.secretName }}
+                  key: {{ .Values.seatsurfing.cryptKey.secretKey }}
+            {{- end }}
+            {{- if and .Values.seatsurfing.smtp.enabled (eq .Values.seatsurfing.smtp.auth "1") .Values.seatsurfing.smtp.password.existingSecret }}
+            - name: SMTP_AUTH_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.seatsurfing.smtp.password.secretName }}
+                  key: {{ .Values.seatsurfing.smtp.password.secretKey }}
+            {{- end }}
+      {{- if or .Values.seatsurfing.jwt.certManager.enabled (gt (len .Values.volumes) 0) }}
+      volumes:
+      {{- end }}
+      {{- if .Values.seatsurfing.jwt.certManager.enabled }}
+        - name: jwt-private-key
+          secret:
+            secretName: {{ include "seatsurfing.fullname" . }}-jwt-secret
+        - name: jwt-public-key
+          emptyDir:
+            sizeLimit: 10Mi
+      {{- end }}
+      {{- with .Values.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

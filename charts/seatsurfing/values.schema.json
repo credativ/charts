@@ -1,0 +1,1019 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "properties": {
+    "affinity": {
+      "additionalProperties": false,
+      "required": [],
+      "title": "affinity",
+      "type": "object"
+    },
+    "fullnameOverride": {
+      "default": "",
+      "required": [],
+      "title": "fullnameOverride",
+      "type": "string"
+    },
+    "global": {
+      "description": "Global values are values that can be accessed from any chart or subchart by exactly the same name.",
+      "required": [],
+      "title": "global",
+      "type": "object"
+    },
+    "images": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "default": "backend",
+          "required": [],
+          "title": "name",
+          "type": "string"
+        },
+        "openssl": {
+          "additionalProperties": false,
+          "description": "Only needed as initContainer if using cert-manager for creating JWT Token",
+          "properties": {
+            "name": {
+              "default": "openssl",
+              "required": [],
+              "title": "name",
+              "type": "string"
+            },
+            "repository": {
+              "default": "alpine",
+              "required": [],
+              "title": "repository",
+              "type": "string"
+            },
+            "tag": {
+              "default": "3.5.4",
+              "description": "renovate: datasource=docker packageName=alpine/openssl",
+              "required": [],
+              "title": "tag",
+              "type": "string"
+            }
+          },
+          "required": [
+            "repository",
+            "name",
+            "tag"
+          ],
+          "title": "openssl",
+          "type": "object"
+        },
+        "pullPolicy": {
+          "default": "IfNotPresent",
+          "required": [],
+          "title": "pullPolicy",
+          "type": "string"
+        },
+        "repository": {
+          "default": "seatsurfing",
+          "required": [],
+          "title": "repository",
+          "type": "string"
+        },
+        "tag": {
+          "default": "",
+          "required": [],
+          "title": "tag",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "pullPolicy",
+        "name",
+        "tag",
+        "openssl"
+      ],
+      "title": "images",
+      "type": "object"
+    },
+    "imagesPullSecrets": {
+      "description": "This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/",
+      "items": {
+        "required": []
+      },
+      "required": [],
+      "title": "imagesPullSecrets",
+      "type": "array"
+    },
+    "ingress": {
+      "additionalProperties": false,
+      "description": "This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/",
+      "properties": {
+        "annotations": {
+          "additionalProperties": false,
+          "required": [],
+          "title": "annotations",
+          "type": "object"
+        },
+        "className": {
+          "default": "",
+          "required": [],
+          "title": "className",
+          "type": "string"
+        },
+        "enabled": {
+          "default": false,
+          "required": [],
+          "title": "enabled",
+          "type": "boolean"
+        },
+        "hosts": {
+          "items": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "host": {
+                    "default": "chart-example.local",
+                    "required": [],
+                    "title": "host",
+                    "type": "string"
+                  },
+                  "paths": {
+                    "items": {
+                      "anyOf": [
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "default": "/",
+                              "required": [],
+                              "title": "path",
+                              "type": "string"
+                            },
+                            "pathType": {
+                              "default": "ImplementationSpecific",
+                              "required": [],
+                              "title": "pathType",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "pathType"
+                          ],
+                          "type": "object"
+                        }
+                      ],
+                      "required": []
+                    },
+                    "required": [],
+                    "title": "paths",
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "host",
+                  "paths"
+                ],
+                "type": "object"
+              }
+            ],
+            "required": []
+          },
+          "required": [],
+          "title": "hosts",
+          "type": "array"
+        },
+        "tls": {
+          "items": {
+            "required": []
+          },
+          "required": [],
+          "title": "tls",
+          "type": "array"
+        }
+      },
+      "required": [
+        "enabled",
+        "className",
+        "annotations",
+        "hosts",
+        "tls"
+      ],
+      "title": "ingress",
+      "type": "object"
+    },
+    "livenessProbe": {
+      "additionalProperties": false,
+      "description": "This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/",
+      "properties": {
+        "httpGet": {
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "default": "/",
+              "required": [],
+              "title": "path",
+              "type": "string"
+            },
+            "port": {
+              "default": "http",
+              "required": [],
+              "title": "port",
+              "type": "string"
+            }
+          },
+          "required": [
+            "path",
+            "port"
+          ],
+          "title": "httpGet",
+          "type": "object"
+        }
+      },
+      "required": [
+        "httpGet"
+      ],
+      "title": "livenessProbe",
+      "type": "object"
+    },
+    "nameOverride": {
+      "default": "",
+      "description": "This is to override the chart name.",
+      "required": [],
+      "title": "nameOverride",
+      "type": "string"
+    },
+    "nodeSelector": {
+      "additionalProperties": false,
+      "required": [],
+      "title": "nodeSelector",
+      "type": "object"
+    },
+    "podAnnotations": {
+      "additionalProperties": false,
+      "description": "This is for setting Kubernetes Annotations to a Pod.\nFor more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/",
+      "required": [],
+      "title": "podAnnotations",
+      "type": "object"
+    },
+    "podLabels": {
+      "additionalProperties": false,
+      "description": "This is for setting Kubernetes Labels to a Pod.\nFor more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/",
+      "required": [],
+      "title": "podLabels",
+      "type": "object"
+    },
+    "podSecurityContext": {
+      "additionalProperties": false,
+      "required": [],
+      "title": "podSecurityContext",
+      "type": "object"
+    },
+    "readinessProbe": {
+      "additionalProperties": false,
+      "properties": {
+        "httpGet": {
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "default": "/",
+              "required": [],
+              "title": "path",
+              "type": "string"
+            },
+            "port": {
+              "default": "http",
+              "required": [],
+              "title": "port",
+              "type": "string"
+            }
+          },
+          "required": [
+            "path",
+            "port"
+          ],
+          "title": "httpGet",
+          "type": "object"
+        }
+      },
+      "required": [
+        "httpGet"
+      ],
+      "title": "readinessProbe",
+      "type": "object"
+    },
+    "resources": {
+      "additionalProperties": false,
+      "properties": {
+        "limits": {
+          "additionalProperties": false,
+          "properties": {
+            "cpu": {
+              "default": "200m",
+              "required": [],
+              "title": "cpu",
+              "type": "string"
+            },
+            "memory": {
+              "default": "512Mi",
+              "required": [],
+              "title": "memory",
+              "type": "string"
+            }
+          },
+          "required": [
+            "cpu",
+            "memory"
+          ],
+          "title": "limits",
+          "type": "object"
+        },
+        "requests": {
+          "additionalProperties": false,
+          "properties": {
+            "cpu": {
+              "default": "100m",
+              "required": [],
+              "title": "cpu",
+              "type": "string"
+            },
+            "memory": {
+              "default": "256Mi",
+              "required": [],
+              "title": "memory",
+              "type": "string"
+            }
+          },
+          "required": [
+            "cpu",
+            "memory"
+          ],
+          "title": "requests",
+          "type": "object"
+        }
+      },
+      "required": [
+        "limits",
+        "requests"
+      ],
+      "title": "resources",
+      "type": "object"
+    },
+    "seatsurfing": {
+      "additionalProperties": false,
+      "properties": {
+        "cryptKey": {
+          "additionalProperties": false,
+          "description": "Use existing secret, provide a value or cryptKey is disabled.\nIt must not be changed after first start!",
+          "properties": {
+            "existingSecret": {
+              "default": false,
+              "required": [],
+              "title": "existingSecret",
+              "type": "boolean"
+            },
+            "secretKey": {
+              "default": "",
+              "required": [],
+              "title": "secretKey",
+              "type": "string"
+            },
+            "secretName": {
+              "default": "",
+              "required": [],
+              "title": "secretName",
+              "type": "string"
+            },
+            "value": {
+              "default": "",
+              "required": [],
+              "title": "value",
+              "type": "string"
+            }
+          },
+          "required": [
+            "existingSecret",
+            "secretName",
+            "secretKey",
+            "value"
+          ],
+          "title": "cryptKey",
+          "type": "object"
+        },
+        "jwt": {
+          "additionalProperties": false,
+          "description": "Chose cert-manager or existing secret, otherwise seatsurfing is generating a JWT at every start.\ncert-manager is highly recommended",
+          "properties": {
+            "certManager": {
+              "additionalProperties": false,
+              "properties": {
+                "duration": {
+                  "default": "8760h",
+                  "required": [],
+                  "title": "duration",
+                  "type": "string"
+                },
+                "enabled": {
+                  "default": false,
+                  "required": [],
+                  "title": "enabled",
+                  "type": "boolean"
+                },
+                "privateKey": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "algorithm": {
+                      "default": "RSA",
+                      "required": [],
+                      "title": "algorithm",
+                      "type": "string"
+                    },
+                    "size": {
+                      "default": 4096,
+                      "required": [],
+                      "title": "size",
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "algorithm",
+                    "size"
+                  ],
+                  "title": "privateKey",
+                  "type": "object"
+                }
+              },
+              "required": [
+                "enabled",
+                "duration",
+                "privateKey"
+              ],
+              "title": "certManager",
+              "type": "object"
+            },
+            "existingSecret": {
+              "additionalProperties": false,
+              "properties": {
+                "enabled": {
+                  "default": false,
+                  "required": [],
+                  "title": "enabled",
+                  "type": "boolean"
+                },
+                "secretName": {
+                  "default": "",
+                  "required": [],
+                  "title": "secretName",
+                  "type": "string"
+                },
+                "secretPrivateKey": {
+                  "default": "",
+                  "required": [],
+                  "title": "secretPrivateKey",
+                  "type": "string"
+                },
+                "secretPublicKey": {
+                  "default": "",
+                  "required": [],
+                  "title": "secretPublicKey",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "enabled",
+                "secretName",
+                "secretPrivateKey",
+                "secretPublicKey"
+              ],
+              "title": "existingSecret",
+              "type": "object"
+            }
+          },
+          "required": [
+            "certManager",
+            "existingSecret"
+          ],
+          "title": "jwt",
+          "type": "object"
+        },
+        "loginProtection": {
+          "additionalProperties": false,
+          "properties": {
+            "banMinutes": {
+              "default": "5",
+              "required": [],
+              "title": "banMinutes",
+              "type": "string"
+            },
+            "maxFails": {
+              "default": "10",
+              "required": [],
+              "title": "maxFails",
+              "type": "string"
+            },
+            "slidingWindowSeconds": {
+              "default": "600",
+              "required": [],
+              "title": "slidingWindowSeconds",
+              "type": "string"
+            }
+          },
+          "required": [
+            "maxFails",
+            "slidingWindowSeconds",
+            "banMinutes"
+          ],
+          "title": "loginProtection",
+          "type": "object"
+        },
+        "organisation": {
+          "additionalProperties": false,
+          "properties": {
+            "init": {
+              "additionalProperties": false,
+              "properties": {
+                "domain": {
+                  "default": "seatsurfing.local",
+                  "required": [],
+                  "title": "domain",
+                  "type": "string"
+                },
+                "language": {
+                  "default": "en",
+                  "required": [],
+                  "title": "language",
+                  "type": "string"
+                },
+                "name": {
+                  "default": "Sample Company",
+                  "required": [],
+                  "title": "name",
+                  "type": "string"
+                },
+                "password": {
+                  "default": "12345678",
+                  "required": [],
+                  "title": "password",
+                  "type": "string"
+                },
+                "username": {
+                  "default": "admin",
+                  "required": [],
+                  "title": "username",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "domain",
+                "username",
+                "password",
+                "language"
+              ],
+              "title": "init",
+              "type": "object"
+            },
+            "signup": {
+              "additionalProperties": false,
+              "properties": {
+                "admin": {
+                  "default": "admin",
+                  "required": [],
+                  "title": "admin",
+                  "type": "string"
+                },
+                "delete": {
+                  "default": "0",
+                  "required": [],
+                  "title": "delete",
+                  "type": "string"
+                },
+                "domain": {
+                  "default": ".on.seatsurfing.local",
+                  "description": "Should be your email domain, if using Entra ID you are only able to use accounts from this domain",
+                  "required": [],
+                  "title": "domain",
+                  "type": "string"
+                },
+                "enabled": {
+                  "default": "0",
+                  "required": [],
+                  "title": "enabled",
+                  "type": "string"
+                },
+                "maxUsers": {
+                  "default": "50",
+                  "required": [],
+                  "title": "maxUsers",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "enabled",
+                "domain",
+                "admin",
+                "maxUsers",
+                "delete"
+              ],
+              "title": "signup",
+              "type": "object"
+            }
+          },
+          "required": [
+            "init",
+            "signup"
+          ],
+          "title": "organisation",
+          "type": "object"
+        },
+        "postgresql": {
+          "additionalProperties": false,
+          "properties": {
+            "connectionString": {
+              "additionalProperties": false,
+              "description": "If there exists a secret having the connection string for pgsql,\nit can be used directly, e.g. if provided by cnpg.",
+              "properties": {
+                "existingSecret": {
+                  "default": false,
+                  "required": [],
+                  "title": "existingSecret",
+                  "type": "boolean"
+                },
+                "secretKey": {
+                  "default": "",
+                  "required": [],
+                  "title": "secretKey",
+                  "type": "string"
+                },
+                "secretName": {
+                  "default": "",
+                  "required": [],
+                  "title": "secretName",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "existingSecret",
+                "secretName",
+                "secretKey"
+              ],
+              "title": "connectionString",
+              "type": "object"
+            },
+            "database": {
+              "default": "",
+              "required": [],
+              "title": "database",
+              "type": "string"
+            },
+            "hostname": {
+              "default": "",
+              "description": "If we don't use a existing connection string, we need to set\nhostname, username, password and database",
+              "required": [],
+              "title": "hostname",
+              "type": "string"
+            },
+            "password": {
+              "additionalProperties": false,
+              "properties": {
+                "existingSecret": {
+                  "default": false,
+                  "required": [],
+                  "title": "existingSecret",
+                  "type": "boolean"
+                },
+                "secretKey": {
+                  "default": "",
+                  "required": [],
+                  "title": "secretKey",
+                  "type": "string"
+                },
+                "secretName": {
+                  "default": "",
+                  "required": [],
+                  "title": "secretName",
+                  "type": "string"
+                },
+                "value": {
+                  "default": "",
+                  "description": "If not using an existing secret, the password must be set here",
+                  "required": [],
+                  "title": "value",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "existingSecret",
+                "secretName",
+                "secretKey",
+                "value"
+              ],
+              "title": "password",
+              "type": "object"
+            },
+            "username": {
+              "default": "",
+              "required": [],
+              "title": "username",
+              "type": "string"
+            }
+          },
+          "required": [
+            "connectionString",
+            "hostname",
+            "username",
+            "password",
+            "database"
+          ],
+          "title": "postgresql",
+          "type": "object"
+        },
+        "smtp": {
+          "additionalProperties": false,
+          "properties": {
+            "auth": {
+              "default": "0",
+              "required": [],
+              "title": "auth",
+              "type": "string"
+            },
+            "enabled": {
+              "default": false,
+              "required": [],
+              "title": "enabled",
+              "type": "boolean"
+            },
+            "host": {
+              "default": "",
+              "required": [],
+              "title": "host",
+              "type": "string"
+            },
+            "password": {
+              "additionalProperties": false,
+              "properties": {
+                "existingSecret": {
+                  "default": false,
+                  "required": [],
+                  "title": "existingSecret",
+                  "type": "boolean"
+                },
+                "secretKey": {
+                  "default": "",
+                  "required": [],
+                  "title": "secretKey",
+                  "type": "string"
+                },
+                "secretName": {
+                  "default": "",
+                  "required": [],
+                  "title": "secretName",
+                  "type": "string"
+                },
+                "value": {
+                  "default": "",
+                  "required": [],
+                  "title": "value",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "existingSecret",
+                "secretName",
+                "secretKey",
+                "value"
+              ],
+              "title": "password",
+              "type": "object"
+            },
+            "port": {
+              "default": "0",
+              "required": [],
+              "title": "port",
+              "type": "string"
+            },
+            "sender_address": {
+              "default": "",
+              "required": [],
+              "title": "sender_address",
+              "type": "string"
+            },
+            "starttls": {
+              "default": "0",
+              "required": [],
+              "title": "starttls",
+              "type": "string"
+            },
+            "username": {
+              "default": "",
+              "required": [],
+              "title": "username",
+              "type": "string"
+            }
+          },
+          "required": [
+            "enabled",
+            "host",
+            "port",
+            "auth",
+            "username",
+            "password",
+            "starttls",
+            "sender_address"
+          ],
+          "title": "smtp",
+          "type": "object"
+        }
+      },
+      "required": [
+        "cryptKey",
+        "organisation",
+        "jwt",
+        "loginProtection",
+        "smtp",
+        "postgresql"
+      ],
+      "title": "seatsurfing",
+      "type": "object"
+    },
+    "securityContext": {
+      "additionalProperties": false,
+      "properties": {
+        "capabilities": {
+          "additionalProperties": false,
+          "properties": {
+            "drop": {
+              "items": {
+                "anyOf": [
+                  {
+                    "required": [],
+                    "type": "string"
+                  }
+                ],
+                "required": []
+              },
+              "required": [],
+              "title": "drop",
+              "type": "array"
+            }
+          },
+          "required": [
+            "drop"
+          ],
+          "title": "capabilities",
+          "type": "object"
+        },
+        "readOnlyRootFilesystem": {
+          "default": true,
+          "required": [],
+          "title": "readOnlyRootFilesystem",
+          "type": "boolean"
+        },
+        "runAsNonRoot": {
+          "default": true,
+          "required": [],
+          "title": "runAsNonRoot",
+          "type": "boolean"
+        },
+        "runAsUser": {
+          "default": 1000,
+          "required": [],
+          "title": "runAsUser",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "capabilities",
+        "readOnlyRootFilesystem",
+        "runAsNonRoot",
+        "runAsUser"
+      ],
+      "title": "securityContext",
+      "type": "object"
+    },
+    "service": {
+      "additionalProperties": false,
+      "properties": {
+        "annotations": {
+          "additionalProperties": false,
+          "required": [],
+          "title": "annotations",
+          "type": "object"
+        },
+        "containerPort": {
+          "default": 8080,
+          "required": [],
+          "title": "containerPort",
+          "type": "integer"
+        },
+        "port": {
+          "default": 80,
+          "required": [],
+          "title": "port",
+          "type": "integer"
+        },
+        "type": {
+          "default": "ClusterIP",
+          "required": [],
+          "title": "type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "port",
+        "containerPort",
+        "annotations"
+      ],
+      "title": "service",
+      "type": "object"
+    },
+    "serviceAccount": {
+      "additionalProperties": false,
+      "description": "This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/",
+      "properties": {
+        "annotations": {
+          "additionalProperties": false,
+          "description": "Annotations to add to the service account",
+          "required": [],
+          "title": "annotations",
+          "type": "object"
+        },
+        "automount": {
+          "default": true,
+          "description": "Automatically mount a ServiceAccount's API credentials?",
+          "required": [],
+          "title": "automount",
+          "type": "boolean"
+        },
+        "create": {
+          "default": true,
+          "description": "Specifies whether a service account should be created",
+          "required": [],
+          "title": "create",
+          "type": "boolean"
+        },
+        "name": {
+          "default": "",
+          "description": "The name of the service account to use.\nIf not set and create is true, a name is generated using the fullname template",
+          "required": [],
+          "title": "name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "create",
+        "automount",
+        "annotations",
+        "name"
+      ],
+      "title": "serviceAccount",
+      "type": "object"
+    },
+    "tolerations": {
+      "items": {
+        "required": []
+      },
+      "required": [],
+      "title": "tolerations",
+      "type": "array"
+    },
+    "volumeMounts": {
+      "description": "Additional volumeMounts on the output Deployment definition.",
+      "items": {
+        "required": []
+      },
+      "required": [],
+      "title": "volumeMounts",
+      "type": "array"
+    },
+    "volumes": {
+      "description": "Additional volumes on the output Deployment definition.",
+      "items": {
+        "required": []
+      },
+      "required": [],
+      "title": "volumes",
+      "type": "array"
+    }
+  },
+  "required": [
+    "images",
+    "imagesPullSecrets",
+    "nameOverride",
+    "fullnameOverride",
+    "serviceAccount",
+    "podAnnotations",
+    "podLabels",
+    "podSecurityContext",
+    "securityContext",
+    "service",
+    "ingress",
+    "resources",
+    "livenessProbe",
+    "readinessProbe",
+    "volumes",
+    "volumeMounts",
+    "nodeSelector",
+    "tolerations",
+    "affinity",
+    "seatsurfing"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,25 @@
+{{- if .Values.seatsurfing.jwt.certManager.enabled }}
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: {{ include "seatsurfing.fullname" . }}-jwt-issuer
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "seatsurfing.fullname" . }}-jwt-cert
+spec:
+  commonName: {{ include "seatsurfing.fullname" . }}-jwt-signing
+  duration: {{ .Values.seatsurfing.jwt.certManager.duration }}
+  secretName: {{ include "seatsurfing.fullname" . }}-jwt-secret
+  isCA: false
+  privateKey:
+    algorithm: {{ .Values.seatsurfing.jwt.certManager.privateKey.algorithm }}
+    size: {{ .Values.seatsurfing.jwt.certManager.privateKey.size }}
+  issuerRef:
+    name: {{ include "seatsurfing.fullname" . }}-jwt-issuer
+    kind: Issuer
+{{- end }}

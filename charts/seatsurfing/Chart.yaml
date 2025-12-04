@@ -1,0 +1,11 @@
+---
+apiVersion: v2
+name: seatsurfing
+description: Seatsurfing is a cloud native solution for free seating and co-working in your organisation.
+
+type: application
+
+version: 0.0.0
+
+# renovate: datasource=docker packageName=seatsurfing/backend
+appVersion: "1.49.0"
