@@ -1,9 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "additionalProperties": false,
   "properties": {
     "affinity": {
-      "additionalProperties": false,
       "required": [],
       "title": "affinity",
       "type": "object"
@@ -21,7 +19,6 @@
       "type": "object"
     },
     "images": {
-      "additionalProperties": false,
       "properties": {
         "name": {
           "default": "backend",
@@ -30,7 +27,6 @@
           "type": "string"
         },
         "openssl": {
-          "additionalProperties": false,
           "description": "Only needed as initContainer if using cert-manager for creating JWT Token",
           "properties": {
             "name": {
@@ -100,11 +96,9 @@
       "type": "array"
     },
     "ingress": {
-      "additionalProperties": false,
       "description": "This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/",
       "properties": {
         "annotations": {
-          "additionalProperties": false,
           "required": [],
           "title": "annotations",
           "type": "object"
@@ -125,7 +119,6 @@
           "items": {
             "anyOf": [
               {
-                "additionalProperties": false,
                 "properties": {
                   "host": {
                     "default": "chart-example.local",
@@ -137,7 +130,6 @@
                     "items": {
                       "anyOf": [
                         {
-                          "additionalProperties": false,
                           "properties": {
                             "path": {
                               "default": "/",
@@ -199,11 +191,9 @@
       "type": "object"
     },
     "livenessProbe": {
-      "additionalProperties": false,
       "description": "This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/",
       "properties": {
         "httpGet": {
-          "additionalProperties": false,
           "properties": {
             "path": {
               "default": "/",
@@ -240,36 +230,30 @@
       "type": "string"
     },
     "nodeSelector": {
-      "additionalProperties": false,
       "required": [],
       "title": "nodeSelector",
       "type": "object"
     },
     "podAnnotations": {
-      "additionalProperties": false,
       "description": "This is for setting Kubernetes Annotations to a Pod.\nFor more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/",
       "required": [],
       "title": "podAnnotations",
       "type": "object"
     },
     "podLabels": {
-      "additionalProperties": false,
       "description": "This is for setting Kubernetes Labels to a Pod.\nFor more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/",
       "required": [],
       "title": "podLabels",
       "type": "object"
     },
     "podSecurityContext": {
-      "additionalProperties": false,
       "required": [],
       "title": "podSecurityContext",
       "type": "object"
     },
     "readinessProbe": {
-      "additionalProperties": false,
       "properties": {
         "httpGet": {
-          "additionalProperties": false,
           "properties": {
             "path": {
               "default": "/",
@@ -299,10 +283,8 @@
       "type": "object"
     },
     "resources": {
-      "additionalProperties": false,
       "properties": {
         "limits": {
-          "additionalProperties": false,
           "properties": {
             "cpu": {
               "default": "200m",
@@ -325,7 +307,6 @@
           "type": "object"
         },
         "requests": {
-          "additionalProperties": false,
           "properties": {
             "cpu": {
               "default": "100m",
@@ -356,10 +337,8 @@
       "type": "object"
     },
     "seatsurfing": {
-      "additionalProperties": false,
       "properties": {
         "cryptKey": {
-          "additionalProperties": false,
           "description": "Use existing secret, provide a value or cryptKey is disabled.\nIt must not be changed after first start!",
           "properties": {
             "existingSecret": {
@@ -397,11 +376,9 @@
           "type": "object"
         },
         "jwt": {
-          "additionalProperties": false,
           "description": "Chose cert-manager or existing secret, otherwise seatsurfing is generating a JWT at every start.\ncert-manager is highly recommended",
           "properties": {
             "certManager": {
-              "additionalProperties": false,
               "properties": {
                 "duration": {
                   "default": "8760h",
@@ -416,7 +393,6 @@
                   "type": "boolean"
                 },
                 "privateKey": {
-                  "additionalProperties": false,
                   "properties": {
                     "algorithm": {
                       "default": "RSA",
@@ -448,7 +424,6 @@
               "type": "object"
             },
             "existingSecret": {
-              "additionalProperties": false,
               "properties": {
                 "enabled": {
                   "default": false,
@@ -493,7 +468,6 @@
           "type": "object"
         },
         "loginProtection": {
-          "additionalProperties": false,
           "properties": {
             "banMinutes": {
               "default": "5",
@@ -523,10 +497,8 @@
           "type": "object"
         },
         "organisation": {
-          "additionalProperties": false,
           "properties": {
             "init": {
-              "additionalProperties": false,
               "properties": {
                 "domain": {
                   "default": "seatsurfing.local",
@@ -570,7 +542,6 @@
               "type": "object"
             },
             "signup": {
-              "additionalProperties": false,
               "properties": {
                 "admin": {
                   "default": "admin",
@@ -623,10 +594,8 @@
           "type": "object"
         },
         "postgresql": {
-          "additionalProperties": false,
           "properties": {
             "connectionString": {
-              "additionalProperties": false,
               "description": "If there exists a secret having the connection string for pgsql,\nit can be used directly, e.g. if provided by cnpg.",
               "properties": {
                 "existingSecret": {
@@ -670,7 +639,6 @@
               "type": "string"
             },
             "password": {
-              "additionalProperties": false,
               "properties": {
                 "existingSecret": {
                   "default": false,
@@ -725,7 +693,6 @@
           "type": "object"
         },
         "smtp": {
-          "additionalProperties": false,
           "properties": {
             "auth": {
               "default": "0",
@@ -746,7 +713,6 @@
               "type": "string"
             },
             "password": {
-              "additionalProperties": false,
               "properties": {
                 "existingSecret": {
                   "default": false,
@@ -833,10 +799,8 @@
       "type": "object"
     },
     "securityContext": {
-      "additionalProperties": false,
       "properties": {
         "capabilities": {
-          "additionalProperties": false,
           "properties": {
             "drop": {
               "items": {
@@ -888,10 +852,8 @@
       "type": "object"
     },
     "service": {
-      "additionalProperties": false,
       "properties": {
         "annotations": {
-          "additionalProperties": false,
           "required": [],
           "title": "annotations",
           "type": "object"
@@ -925,11 +887,9 @@
       "type": "object"
     },
     "serviceAccount": {
-      "additionalProperties": false,
       "description": "This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/",
       "properties": {
         "annotations": {
-          "additionalProperties": false,
           "description": "Annotations to add to the service account",
           "required": [],
           "title": "annotations",
