@@ -42,3 +42,4 @@ repos:
           - --chart-search-root=charts
           - --no-dependencies
           - --append-newline
+          - "--skip-auto-generation=additionalProperties"
