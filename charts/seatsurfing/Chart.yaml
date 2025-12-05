@@ -9,3 +9,10 @@ version: 0.0.0
 
 # renovate: datasource=docker packageName=seatsurfing/backend
 appVersion: "1.49.0"
+
+annotations:
+  artifacthub.io/links: |
+    - name: Chart Source
+      url: https://github.com/credativ/charts
+    - name: Seatsurfing
+      url: https://seatsurfing.io
