@@ -28,7 +28,7 @@ jobs:
           echo "chart_version=$CHART_VERSION" >> $GITHUB_OUTPUT
 
       - name: Setup Helm
-        uses: azure/setup-helm@v4
+        uses: azure/setup-helm@v5
 
       - name: Login to OCI registry
         # yamllint disable-line rule:line-length
