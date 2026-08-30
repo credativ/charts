@@ -8,7 +8,7 @@ images:
     repository: alpine
     name: openssl
     # renovate: datasource=docker packageName=alpine/openssl
-    tag: 3.5.7
+    tag: 3.5.8
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagesPullSecrets: []
